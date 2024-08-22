@@ -1,4 +1,8 @@
 # Activity Tracker for iPhone
+![icon_activity](https://github.com/user-attachments/assets/607098d6-e47b-4597-8d4a-848f295c3cb0)
+
+
+
 ## The app in action
 ![Simulator Screen Recording - iPhone 15 Pro - 2024-07-12 at 15 23 26](https://github.com/user-attachments/assets/70e349af-20dd-495f-8d62-05e36a170e73)
 
