@@ -6,63 +6,54 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ActivityItem: Identifiable, Codable {
-    var id = UUID()
-    let activityName: String
-    let description: String
-    let minutes: Double
-}
-
-@Observable
-class Activities {
-    var items = [ActivityItem]() {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.set(encoded, forKey: "Items")
-            }
-        }
-    }
-    init() {
-        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
-            if let decodedItems = try?
-                JSONDecoder().decode([ActivityItem].self, from: savedItems) {
-                items = decodedItems
-                return
-            }
-        }
-        items = [] //Initializes empty
-    }
-}
 
 struct ContentView: View {
-    @State private var activities = Activities()
-    @State private var showingAddActivityView = false
+    @Environment(\.modelContext) var modelContext
+    @State private var path = [Activity]()
+    @Query(sort: \Activity.activityName) var activities: [Activity]
+    
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(activities.items) {item in
-                    HStack {
-                        Text(item.activityName)
-                        Text(item.description)
-                        Text("\(item.minutes) minutes")
+        NavigationStack(path: $path) {
+            List(activities) { activity in
+                NavigationLink(value: activity) {
+                    VStack(alignment: .leading){
+                        HStack {
+                            Text(activity.activityName)
+                                .font(.headline)
+                            Text(activity.activityType)
+                        }
+                        HStack {
+                            Text("\(Int(activity.minutes)) mins")
+                                .font(.subheadline)
+                        }
+                        
+                            
+                        
                     }
+                            
+              }
+            }
+            .navigationTitle("Activities")
+            .navigationDestination(for: Activity.self) { activity in
+                            AddActivityView(activity: activity)
+                        }
+            .toolbar {
+                Button("Add User", systemImage: "plus") {
+                    let activity = Activity(activityName: "Sample", activityType: "Exercise", description: "", minutes: Double(60), startTime: Date.now, endTime: Date.now.addingTimeInterval(-10000))
+                    modelContext.insert(activity)
+                    path = [activity] //Pushes into the path
                     
                 }
             }
-            .navigationTitle("Your activities")
-            .toolbar {
-                Button("Add activity", systemImage: "plus") {
-                    showingAddActivityView = true
-                }
-            }
-            .sheet(isPresented: $showingAddActivityView) {
-                AddActivityView(activities: activities)
-            }
         }
     }
+    
+
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: Activity.self)
 }

@@ -12,6 +12,7 @@
 		605518542C3CA1610057F396 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 605518532C3CA1610057F396 /* Assets.xcassets */; };
 		605518572C3CA1610057F396 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 605518562C3CA1610057F396 /* Preview Assets.xcassets */; };
 		6055185E2C3CAA590057F396 /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055185D2C3CAA590057F396 /* AddActivityView.swift */; };
+		60F2A8062C4DA49F001AEA33 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2A8052C4DA49F001AEA33 /* Activity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		605518532C3CA1610057F396 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		605518562C3CA1610057F396 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6055185D2C3CAA590057F396 /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
+		60F2A8052C4DA49F001AEA33 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				6055184F2C3CA1600057F396 /* ActivitiesApp.swift */,
+				60F2A8052C4DA49F001AEA33 /* Activity.swift */,
 				605518512C3CA1600057F396 /* ContentView.swift */,
 				6055185D2C3CAA590057F396 /* AddActivityView.swift */,
 				605518532C3CA1610057F396 /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			files = (
 				6055185E2C3CAA590057F396 /* AddActivityView.swift in Sources */,
 				605518522C3CA1600057F396 /* ContentView.swift in Sources */,
+				60F2A8062C4DA49F001AEA33 /* Activity.swift in Sources */,
 				605518502C3CA1600057F396 /* ActivitiesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,44 +6,53 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddActivityView: View {
-    @State private var activityName = ""
-    @State private var activityDescription = ""
-    @State private var timeAmount = 0.0
     @Environment(\.dismiss) var dismiss
-    var activities: Activities
+    @Bindable var activity: Activity
+    
+    
+    let activityTypeChoices = ["Choose", "Exercise", "Spiritual", "Goofing off", "Education", "Work", "Self care", "Travelling"]
     var body: some View {
-        NavigationStack {
+        VStack {
             Form {
-                Section("Essentials") {
-                    TextField("Activity Name", text: $activityName)
+                Section("Edit core details") {
+                    TextField("Activity name", text: $activity.activityName)
                         .font(.headline)
-                    
-                    TextField("Custom minutes", value: $timeAmount, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
-                        
+                    Slider(value: $activity.minutes, in: 0...200, step: 5)
+                    Text("\($activity.minutes) minutes spent")
+                        .foregroundColor(.secondary)
                 }
-                
+                Picker("Select activity type", selection: $activity.activityType) {
+                    ForEach(activityTypeChoices, id: \.self) {
+                        Text($0)
+                    }
+                }
                 Section("Add a description") {
-                    TextEditor(text: $activityDescription)
+                    TextEditor(text: $activity.desc)
                         .frame(minWidth: 100, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
-                }
                     
+                }
+                
                 
             }
-            
-            .navigationTitle("Add an activity")
-            
-            Button("Save") {
-                let item = ActivityItem(activityName: activityName, description: activityDescription, minutes: timeAmount)
-                activities.items.append(item)
-                dismiss()
-            }
+            .navigationTitle(activity.activityName)
         }
     }
 }
 
 #Preview {
-    AddActivityView(activities: Activities())
+    
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Activity.self, configurations: config)
+        let activity = Activity(activityName: "Sample", activityType: "Exercise", description: "Yum!", minutes: 20, startTime: Date.now.addingTimeInterval(-1000), endTime: Date.now)
+        
+        return AddActivityView(activity: activity)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create container: \(error.localizedDescription)")
+    }
+
 }
